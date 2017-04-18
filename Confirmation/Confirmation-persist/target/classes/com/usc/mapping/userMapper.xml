@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.usc.dao.UserMapper">
+	<resultMap type="com.usc.model.User" id="userMap">
+		<id property="account" column="account" />
+		<result property="password" column="password" />
+		<result property="name" column="name" />
+		<result property="sex" column="sex" />
+		<result property="kslb" column="kslb" />
+		<result property="kl" column="kl" />
+		<result property="sfzh" column="sfzh" />
+		<result property="telnum1" column="telnum1" />
+		<result property="telnum2" column="telnum2" />
+		<result property="tdcj" column="tdcj" />
+		<result property="ylzy" column="ylzy" />
+		<result property="zydh1" column="zydh1" />
+		<result property="zydh2" column="zydh2" />
+		<result property="zydh3" column="zydh3" />
+		<result property="zydh4" column="zydh4" />
+		<result property="zydh5" column="zydh5" />
+		<result property="zydh6" column="zydh6" />
+		<result property="img" column="img" />
+		<result property="operation" column="operation" />
+		<result property="shzt" column="shzt" />
+		<result property="isadopt" column="isadopt" />
+		<result property="pc" column="pc" />
+		<result property="accountNonExpired" column="accountNonExpired" />
+		<result property="accountNonLocked" column="accountNonLocked" />
+		<result property="credentialsNonExpired" column="credentialsNonExpired" />
+		<result property="enabled" column="enabled" />
+	</resultMap>
+	<resultMap type="com.usc.model.User" id="userRoleMap"
+		extends="userMap">
+		<collection property="authorities" ofType="com.usc.model.Role">
+			<id property="id" column="id" />
+			<result property="name" column="rolename" />
+		</collection>
+	</resultMap>
+	<select id="findUserById" parameterType="java.lang.String" resultMap="userMap">
+		select *
+		from users where account = #{account}
+	</select>
+	<select id="findUserWithRoleById" parameterType="java.lang.String" resultMap="userRoleMap">
+		select
+		u.account,u.password,u.name,u.sex,u.kslb,u.kl,u.sfzh,u.telnum1,u.telnum2,u.tdcj,u.ylzy,u.zydh1,u.zydh2,u.zydh3,u.zydh4,u.zydh5,u.zydh6,u.img,u.operation,u.shzt,u.isadopt,u.pc,u.accountNonExpired,u.accountNonLocked,u.credentialsNonExpired,u.enabled,r.id,r.roleName
+		from users u left join users_roles relative on u.account =
+		relative.user_id left join roles r on r.id = relative.role_id where
+		u.account = #{account}
+	</select>
+	<delete id="deleteUserById" parameterType="java.lang.String">
+	
+	</delete>
+	
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/security
+          http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<!-- 配置静态资源 -->
+	<security:http pattern="css/**" security="none"></security:http>
+	<security:http pattern="image/**" security="none"></security:http>
+	<security:http pattern="js/**" security="none"></security:http>
+
+	<!-- 如下定义中，intercept-url定义了一个权限控制的规则。pattern属性表示我们将对哪些url 进行权限控制，其也可以是一个正则表达式，如上的写法表示我们将对所有的URL进行权限控制；access属性 
+		表示在请求对应的URL时需要什么权限，默认配置时它应该是一个以逗号分隔的角色列表，请求的用户 只需拥有其中的一个角色就能成功访问对应的URL。这里的“ROLE_USER”表示请求的用户应当 
+		具有ROLE_USER角色。“ROLE_”前缀是一个提示Spring使用基于角色的检查的标记。 -->
+	<security:http auto-config="false" use-expressions="true" entry-point-ref="authenticationEntryPoint">
+		<security:logout invalidate-session="true" logout-success-url="index.jsp" />
+		<security:session-management
+			invalid-session-url="/sessionOutTime.jsp">
+			<!-- 单点登录 -->
+			<!-- max-sessions表示最多允许多少次重复登录。如果没有配置error-if-maximum-exceeded，那么用户账号的第二次登录会使第一次登录失效，而配置了的话，那么第二次登录会被阻止。通常的做法是阻止第二次登录。 -->
+			<security:concurrency-control
+				max-sessions="1" error-if-maximum-exceeded="false" />
+		</security:session-management>
+		<security:custom-filter ref="myAuthenticationFilter" position="FORM_LOGIN_FILTER"/>
+	</security:http>
+	<bean id="myAuthenticationFilter" class="com.usc.filter.MyUsernamePasswordAuthenticationFilter">
+		<property name="authenticationManager" ref="authenticationManager" />
+		<!-- 认证成功的操作 -->
+		<property name="authenticationSuccessHandler" ref="" />
+		<!-- 认证失败的操作 -->
+    	<property name="authenticationFailureHandler" ref="" />
+	</bean>
+	<!-- 异常信息 -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="message" />
+	</bean>
+
+	<!-- 使用了Annotations保护业务方法 可以接口添加 @RolesAllowed("ROLE_ADMIN") -->
+	<security:global-method-security
+		jsr250-annotations="enabled" secured-annotations="enabled"></security:global-method-security>
+
+
+	<!-- 当指定http元素的auto-config=”true”时，就相当于如下内容的简写。 <security:http> <security:form-login/> 
+		<security:http-basic/> <security:logout/> </security:http> 这些元素负责建立表单登录、基本的认证和登出处理。 
+		它们都可以通过指定对应的属性来改变它们的行为。 -->
+
+	<!-- 有了权限控制的规则了后，接下来我们需要定义一个AuthenticationManager用于认证。 -->
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider ref="userDetailsService" />
+	</security:authentication-manager>
+	<bean id="userDetailsService" class="com.usc.serviceImpl.UserLoginServiceImpl" />
+	<bean id="myAuthenticationProvider" class="com.usc.security.MyAuthenticationProvider">
+		<property name="userDetailsService" ref="userDetailsService" />
+	</bean>
+	<!-- 登录接入点 -->
+	<bean id="authenticationEntryPoint"
+        class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+        <property name="loginFormUrl" value="" />
+    </bean>
+    
+</beans>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.usc.mapping.genderMapper">
+	<select id="findAllGender" resultType="com.usc.model.Gender">
+		select * from gender
+	</select>
+	<select id="findGenderById" parameterType="java.lang.String"
+		resultType="com.usc.model.Gender">
+		select * from gender where code = #{code}
+	</select>
+	<insert id="addGender" parameterType="com.usc.model.Gender">
+		insert into gender
+		(code,genderName) values (#{code},#{genderName})
+	</insert>
+	<delete id="deleteGenderById" parameterType="int">
+		delete from gender
+		where code = #{code}
+	</delete>
+	<update id="updateGender" parameterType="com.usc.model.Gender">
+		update gender set
+		genderName = #{genderName} where code = #{code}
+	</update>
+</mapper>
