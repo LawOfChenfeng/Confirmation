@@ -1,0 +1,60 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.head{
+    width: 100%;
+    height: 121px;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    background-image: url("../img/header.png");
+    background-repeat: no-repeat;
+    background-attachment: local;
+}
+
+.loading{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: silver;
+    opacity: 0.8;
+    z-index: 1;
+}
+
+.my_container{
+    width: 600px;
+    height: 500px;
+    margin: 0 auto; /*水平居中*/
+    position: relative; /*脱离文档流*/
+    top: 50%; /*偏移*/
+    /*向上平移自己高度的一半*/
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.info_container{
+    width: 600px;
+    height: 300px;
+    margin: 0 auto; /*水平居中*/
+    position: relative; /*脱离文档流*/
+    top: 50%; /*偏移*/
+    /*向上平移自己高度的一半*/
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.image{
+    padding:0px;
+    width:300px;
+    height:150px;
+}

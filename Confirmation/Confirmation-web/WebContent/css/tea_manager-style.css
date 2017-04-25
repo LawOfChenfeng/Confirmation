@@ -1,0 +1,62 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.head{
+    width: 100%;
+    height: 121px;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    background-image: url("../img/header.png");
+    background-repeat: no-repeat;
+    background-attachment: local;
+}
+
+.my_index{
+    width: 100%;
+    height: 100px;
+    background-image: url("../img/index.jpeg");
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-color: #e68900;
+}
+
+#logout{
+    color: #0000FF;
+}
+
+#logout:hover{
+    color: #00438a;
+}
+
+.panelLeft{
+    width: 10%;
+    height: 100%;
+    position: relative;
+    float: left;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.panelRight{
+    width: 90%;
+    height: 100%;
+    position: relative;
+    float: right;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.listTitle{
+    width: 100%;
+    height: 50px;
+    font-size: 25px;
+}

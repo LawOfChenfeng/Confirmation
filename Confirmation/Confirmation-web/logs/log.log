@@ -1,0 +1,4 @@
+[INFO] [2017-04-24 18:06:39][org.springframework.beans.factory.xml.XmlBeanDefinitionReader]Loading XML bean definitions from class path resource [spring-mybatis.xml]
+[INFO] [2017-04-24 18:06:39][org.springframework.context.support.GenericApplicationContext]Refreshing org.springframework.context.support.GenericApplicationContext@58cd7fdb: startup date [Mon Apr 24 18:06:39 CST 2017]; root of context hierarchy
+[INFO] [2017-04-24 18:06:40][org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor]JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+[INFO] [2017-04-24 18:06:42][org.springframework.context.support.GenericApplicationContext]Closing org.springframework.context.support.GenericApplicationContext@58cd7fdb: startup date [Mon Apr 24 18:06:39 CST 2017]; root of context hierarchy
