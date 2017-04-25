@@ -84,7 +84,7 @@
             <h2>欢迎报考南华大学船山学院</h2>
         </div>
         <div style="width: 396px;height: 292px;margin-bottom: 0px;margin-top: 20px">
-            <form role="form" class="form-horizontal" id="commentForm" method="post" action="#">
+            <form role="form" class="form-horizontal" id="commentForm" method="post" action="/login_submit">
                 <div class="form-group" style="margin-top: 50px">
                     <label for="account" class="col-sm-3 control-label">账号</label>
                     <div class="col-sm-7">
@@ -108,7 +108,7 @@
                 </div>
                 <div class="form-group">
                     <div id="err_msg" style="color: red;font-size: small;text-align: center;font-weight: bold">
-                        ${error_message}
+                        ${SPRING_SECURITY_LAST_EXCEPTION.message}
                     </div>
                 </div>
                 <div class="form-group">
@@ -124,7 +124,7 @@
             <h2>欢迎使用本系统</h2>
         </div>
         <div style="width: 396px;height: 292px;margin-bottom: 0px;margin-top: 20px">
-            <form role="form" class="form-horizontal" id="confirmForm" method="post" action="#">
+            <form role="form" class="form-horizontal" id="confirmForm" method="post" action="/login_submit">
                 <div class="form-group" style="margin-top: 50px">
                     <label for="t_account" class="col-sm-3 control-label">账号</label>
                     <div class="col-sm-7">
@@ -139,7 +139,7 @@
                 </div>
                 <div class="form-group">
                     <div id="t_err_msg" style="color: red;font-size: small;text-align: center;font-weight: bold">
-                        ${error_message2}
+                        ${SPRING_SECURITY_LAST_EXCEPTION.message}
                     </div>
                 </div>
                 <div class="form-group">

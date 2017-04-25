@@ -11,12 +11,18 @@
 	<security:http pattern="css/**" security="none"></security:http>
 	<security:http pattern="image/**" security="none"></security:http>
 	<security:http pattern="js/**" security="none"></security:http>
+	<security:http pattern="font-awesome-4.7.0/**" security="none"></security:http>
+	<security:http pattern="jquery-easy-1.5.1/**" security="none"></security:http>
 
 	<!-- 如下定义中，intercept-url定义了一个权限控制的规则。pattern属性表示我们将对哪些url 进行权限控制，其也可以是一个正则表达式，如上的写法表示我们将对所有的URL进行权限控制；access属性 
 		表示在请求对应的URL时需要什么权限，默认配置时它应该是一个以逗号分隔的角色列表，请求的用户 只需拥有其中的一个角色就能成功访问对应的URL。这里的“ROLE_USER”表示请求的用户应当 
 		具有ROLE_USER角色。“ROLE_”前缀是一个提示Spring使用基于角色的检查的标记。 -->
-	<security:http auto-config="false" use-expressions="true" entry-point-ref="authenticationEntryPoint">
-		<security:logout invalidate-session="true" logout-success-url="index.jsp" />
+	<security:http auto-config="false" use-expressions="true"
+		entry-point-ref="authenticationEntryPoint">
+		<security:intercept-url pattern="/login"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<security:logout invalidate-session="true"
+			logout-success-url="/login" />
 		<security:session-management
 			invalid-session-url="/sessionOutTime.jsp">
 			<!-- 单点登录 -->
@@ -24,15 +30,27 @@
 			<security:concurrency-control
 				max-sessions="1" error-if-maximum-exceeded="false" />
 		</security:session-management>
-		<security:custom-filter ref="myAuthenticationFilter" position="FORM_LOGIN_FILTER"/>
+		<security:custom-filter ref="myAuthenticationFilter"
+			position="FORM_LOGIN_FILTER" />
 	</security:http>
+
 	<bean id="myAuthenticationFilter" class="com.usc.filter.MyUsernamePasswordAuthenticationFilter">
+		<!-- 表单提交url -->
+		<property name="filterProcessesUrl" value="/login_submit"></property>
+		<!-- 认证管理 -->
 		<property name="authenticationManager" ref="authenticationManager" />
 		<!-- 认证成功的操作 -->
-		<property name="authenticationSuccessHandler" ref="" />
+		<property name="authenticationSuccessHandler" ref="myAuthenticationSuccessHandler" />
 		<!-- 认证失败的操作 -->
-    	<property name="authenticationFailureHandler" ref="" />
+		<property name="authenticationFailureHandler" ref="myAuthenticationFailureHandler" />
 	</bean>
+
+	<bean id="myAuthenticationSuccessHandler" class="com.usc.security.AuthenticationSuccessHandlerImpl"></bean>
+	<bean id="myAuthenticationFailureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<property name="defaultFailureUrl" value="/login"></property>
+	</bean>
+
 	<!-- 异常信息 -->
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -50,7 +68,8 @@
 
 	<!-- 有了权限控制的规则了后，接下来我们需要定义一个AuthenticationManager用于认证。 -->
 	<security:authentication-manager alias="authenticationManager">
-		<security:authentication-provider ref="userDetailsService" />
+		<security:authentication-provider
+			ref="myAuthenticationProvider" />
 	</security:authentication-manager>
 	<bean id="userDetailsService" class="com.usc.serviceImpl.UserLoginServiceImpl" />
 	<bean id="myAuthenticationProvider" class="com.usc.security.MyAuthenticationProvider">
@@ -58,8 +77,7 @@
 	</bean>
 	<!-- 登录接入点 -->
 	<bean id="authenticationEntryPoint"
-        class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-        <property name="loginFormUrl" value="" />
-    </bean>
-    
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<property name="loginFormUrl" value="/login" />
+	</bean>
 </beans>

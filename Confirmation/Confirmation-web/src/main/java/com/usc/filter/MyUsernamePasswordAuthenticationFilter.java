@@ -8,7 +8,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.google.code.kaptcha.Constants;
 import com.usc.security.MyAuthenticationToken;
+import com.usc.utils.StringUtil;
 
 /**
  * @author 陈玄礼 E-mail:chenxiake008@qq.com
@@ -42,8 +44,7 @@ public class MyUsernamePasswordAuthenticationFilter extends
 		}
 		String username = obtainUsername(request);
 		String password = obtainPassword(request);
-		String validationCode = (String) request.getSession().getAttribute(
-				"validate_code");
+		String validationCode = obtainCaptcha(request);
 		String redirectUrl = obtainRedercitUrl(request);
 		if (username == null) {
 			username = "";
@@ -52,6 +53,14 @@ public class MyUsernamePasswordAuthenticationFilter extends
 			password = "";
 		}
 		if (validationCode == null) {
+			validationCode = "";
+		}
+		String expectedValidationCode = (String) request.getSession()
+				.getAttribute(Constants.KAPTCHA_SESSION_KEY);
+		if (StringUtil.isBlank(expectedValidationCode)) {
+			validationCode = "";
+		}
+		if (!validationCode.equals(expectedValidationCode)) {
 			validationCode = "";
 		}
 		// 自定义回调URL，若存在则放入Session
@@ -74,6 +83,10 @@ public class MyUsernamePasswordAuthenticationFilter extends
 
 	protected String obtainUsername(HttpServletRequest request) {
 		return request.getParameter(usernameParameter);
+	}
+
+	protected String obtainCaptcha(HttpServletRequest request) {
+		return request.getParameter("validate_code");
 	}
 
 	protected String obtainRedercitUrl(HttpServletRequest request) {

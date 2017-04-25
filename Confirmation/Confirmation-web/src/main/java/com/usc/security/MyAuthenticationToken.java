@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 /**
  * @author 陈玄礼 E-mail:chenxiake008@qq.com
- * @version 创建时间：2017年2月3日 下午11:13:25 类说明
+ * @version 创建时间：2017年2月3日 下午11:13:25 身份验证凭证
  */
 public class MyAuthenticationToken extends AbstractAuthenticationToken {
 

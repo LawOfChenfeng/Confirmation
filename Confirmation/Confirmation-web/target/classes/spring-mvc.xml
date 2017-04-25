@@ -18,15 +18,39 @@
 	<!-- 启用SpringMVC Annotation -->
 	<mvc:annotation-driven />
 	<!-- 静态资源映射 -->
-	<mvc:resources location="js/" mapping="js/**"/>
-	<mvc:resources location="css/" mapping="css/**"/>
-	<mvc:resources location="image/" mapping="image/**"/>
+	<mvc:resources location="js/" mapping="js/**" />
+	<mvc:resources location="css/" mapping="css/**" />
+	<mvc:resources location="img/" mapping="img/**" />
+	<mvc:resources location="font-awesome-4.7.0/" mapping="font-awesome-4.7.0/**" />
+	<mvc:resources location="jquery-easyui-1.5.1/" mapping="jquery-easyui-1.5.1/**" />
 	<!-- 配置视图解析器 -->
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/" />
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 		<property name="order" value="1" />
 	</bean>
 	<!-- 支持文件上传 -->
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	<!-- 验证码配置 -->
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+		<property name="config">
+			<bean class="com.google.code.kaptcha.util.Config">
+				<constructor-arg>
+					<props>
+						<prop key="kaptcha.border">yes</prop>
+						<prop key="kaptcha.border.color">105,179,90</prop>
+						<prop key="kaptcha.textproducer.font.color">blue</prop>
+						<prop key="kaptcha.image.width">125</prop>
+						<prop key="kaptcha.image.height">45</prop>
+						<prop key="kaptcha.textproducer.font.size">45</prop>
+						<prop key="kaptcha.session.key">KAPTCHA_SESSION_KEY</prop>
+						<prop key="kaptcha.textproducer.char.length">4</prop>
+						<prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>
+					</props>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
 </beans>
