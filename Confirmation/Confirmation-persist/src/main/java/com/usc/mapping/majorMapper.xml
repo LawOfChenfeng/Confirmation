@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.usc.dao.MajorMapper">
+	<insert id="insertMajor" parameterType="com.usc.model.Major">
+		insert into major
+		(majorCode,majorName,majorNickName,sectionCode,fraction,majorCategory,isControl)
+		values
+		(#{majorCode},#{majorName},#{majorNickName},#{sectionCode},#{fraction},#{majorCategory},#{isControl})
+	</insert>
+	<delete id="deleteMajorByCode" parameterType="java.lang.String">
+		delete from major
+		where majorCode = #{code}
+	</delete>
+	<update id="updateMajor" parameterType="com.usc.model.Major">
+		update major set
+		majorName = #{majorName},majorNickName = #{majorNickName},sectionCode
+		= #{sectionCode},fraction = #{fraction},majorCategory =
+		#{majorCategory},isControl = #{isControl} where majorCode =
+		#{majorCode}
+	</update>
+	<select id="selectMajorByCode" parameterType="java.lang.String"
+		resultType="com.usc.model.Major">
+		select * from major where majorCode = #{code}
+	</select>
+	<select id="selectAllMajors" resultType="com.usc.model.Major">
+		select * from major
+	</select>
+</mapper>

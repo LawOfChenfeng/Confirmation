@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.usc.dao.SectionMapper">
+	<insert id="insertSection" parameterType="com.usc.model.Section">
+		insert into section
+		(code,sectionName) values (#{code},#{sectionName})
+	</insert>
+	<delete id="deleteSectionByCode" parameterType="java.lang.String">
+		delete from
+		section where code = #{code}
+	</delete>
+	<update id="updateSection" parameterType="com.usc.model.Section">
+		update section set
+		sectionName = #{sectionName} where code = #{code}
+	</update>
+	<select id="selectSectionByCode" parameterType="java.lang.String"
+		resultType="com.usc.model.Section">
+		select * from section where code = #{code}
+	</select>
+	<select id="selectAllSections" resultType="com.usc.model.Section">
+		select * from section
+	</select>
+</mapper>
